@@ -214,7 +214,6 @@ main {
     main {
         height: 42rem;
         padding: 3rem;
-        padding-bottom: 0;
         border-end-end-radius: 200px;
     }
 
