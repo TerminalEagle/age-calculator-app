@@ -20,95 +20,116 @@ const ERROR__IN_FUTURE = "Must be in the past";
 const MONTHS_WITH_31_DAYS = [1, 3, 5, 7, 8, 10, 12];
 const MONTHS_WITH_30_DAYS = [4, 6, 9, 11];
 
-class ageCalculator {
-    constructor() {}
-
-    initializeCurrentDate() {
+class Calculator {
+    constructor() {
+        this.isValid = true;
         this.currentDate = new Date();
-        this.dateObject = {};
-    }
-}
-
-const currentDate = new Date();
-const userInput = {
-    day: undefined,
-    month: undefined,
-    year: undefined,
-};
-
-function checkForLeapYear(year) {
-    if ((year % 4 === 0 && year % 100 !== 0) || year % 400 === 0) return true;
-    else return false;
-}
-
-function resetError() {
-    document.querySelectorAll(".error-message").forEach((message) => (message.textContent = ""));
-}
-
-function validateInputs() {
-    if (userInput.year < 1970) {
-        errorYearEl.textContent = ERROR__INVALID_YEAR;
+        this.dateObject = {
+            day: undefined,
+            month: undefined,
+            year: undefined,
+        };
     }
 
-    if (userInput.year > currentDate.getFullYear()) {
-        errorYearEl.textContent = ERROR__IN_FUTURE;
-    } else if (userInput.year === currentDate.getFullYear()) {
-        if (userInput.month > currentDate.getMonth() + 1) {
-            errorMonthEl.textContent = ERROR__IN_FUTURE;
-        } else if (userInput.month === currentDate.getMonth() + 1) {
-            if (userInput.day > currentDate.getDate()) {
-                errorDayEl.textContent = ERROR__IN_FUTURE;
+    checkForLeapYear(year) {
+        if ((year % 4 === 0 && year % 100 !== 0) || year % 400 === 0) return true;
+        else return false;
+    }
+
+    resetError() {
+        document.querySelectorAll(".error-message").forEach((message) => (message.textContent = ""));
+        displayYearEl.textContent = "--";
+        displayMonthEl.textContent = "--";
+        displayDayEl.textContent = "--";
+        this.isValid = true;
+    }
+
+    validateInputs() {
+        if (this.dateObject.year < 1970) {
+            errorYearEl.textContent = ERROR__INVALID_YEAR;
+            this.isValid = false;
+        }
+
+        if (this.dateObject.year > this.currentDate.getFullYear()) {
+            errorYearEl.textContent = ERROR__IN_FUTURE;
+            this.isValid = false;
+        } else if (this.dateObject.year === this.currentDate.getFullYear()) {
+            if (this.dateObject.month > this.currentDate.getMonth() + 1) {
+                errorMonthEl.textContent = ERROR__IN_FUTURE;
+                this.isValid = false;
+            } else if (this.dateObject.month === this.currentDate.getMonth() + 1) {
+                if (this.dateObject.day > this.currentDate.getDate()) {
+                    errorDayEl.textContent = ERROR__IN_FUTURE;
+                    this.isValid = false;
+                }
+            }
+        }
+
+        if (this.dateObject.month > 12 || this.dateObject.month < 1) {
+            errorMonthEl.textContent = ERROR__INVALID_MONTH;
+            this.isValid = false;
+        }
+
+        if (MONTHS_WITH_31_DAYS.includes(this.dateObject.month) && (this.dateObject.day > 31 || this.dateObject.day < 1)) {
+            errorDayEl.textContent = ERROR__INVALID_DAY;
+            this.isValid = false;
+        } else if (MONTHS_WITH_30_DAYS.includes(this.dateObject.month) && (this.dateObject.day > 30 || this.dateObject.day < 1)) {
+            errorDayEl.textContent = ERROR__INVALID_DAY;
+            this.isValid = false;
+        } else if (this.dateObject.month === 2) {
+            if (
+                (checkForLeapYear(this.dateObject.year) && (this.dateObject.day > 29 || this.dateObject.day < 1)) ||
+                (!checkForLeapYear(this.dateObject.year) && (this.dateObject.day > 28 || this.dateObject.day < 1))
+            ) {
+                errorDayEl.textContent = ERROR__INVALID_DAY;
+                this.isValid = false;
             }
         }
     }
 
-    if (userInput.month > 12 || userInput.month < 1) {
-        errorMonthEl.textContent = ERROR__INVALID_MONTH;
+    getInputs() {
+        inputFields.forEach((input) => {
+            if (input.value === "") {
+                document.querySelector(`.error-${input.name}`).textContent = ERROR__NO_INPUT;
+            } else {
+                this.dateObject[`${input.name}`] = Number.parseInt(input.value);
+            }
+        });
     }
 
-    if (MONTHS_WITH_31_DAYS.includes(userInput.month) && (userInput.day > 31 || userInput.day < 1)) {
-        errorDayEl.textContent = ERROR__INVALID_DAY;
-    } else if (MONTHS_WITH_30_DAYS.includes(userInput.month) && (userInput.day > 30 || userInput.day < 1)) {
-        errorDayEl.textContent = ERROR__INVALID_DAY;
-    } else if (userInput.month === 2) {
-        if ((checkForLeapYear(userInput.year) && (userInput.day > 29 || userInput.day < 1)) || (!checkForLeapYear(userInput.year) && (userInput.day > 28 || userInput.day < 1))) {
-            errorDayEl.textContent = ERROR__INVALID_DAY;
+    calculateAge() {
+        if (
+            !this.isValid ||
+            this.dateObject.day === "" ||
+            this.dateObject.day === undefined ||
+            this.dateObject.month === "" ||
+            this.dateObject.month === undefined ||
+            this.dateObject.year === "" ||
+            this.dateObject.year === undefined
+        ) {
+            return;
         }
+
+        const currentTime = new Date();
+        const birthDate = new Date(this.dateObject.year, this.dateObject.month - 1, this.dateObject.day);
+        const elapsedTime = currentTime.getTime() - birthDate.getTime();
+        const age = new Date(elapsedTime);
+
+        const years = age.getFullYear() - 1970;
+        const months = age.getMonth();
+        const days = age.getDate() - 2;
+
+        displayDayEl.textContent = days;
+        displayMonthEl.textContent = months;
+        displayYearEl.textContent = years;
     }
 }
 
-function getInputs() {
-    inputFields.forEach((input) => {
-        if (input.value === "") {
-            document.querySelector(`.error-${input.name}`).textContent = ERROR__NO_INPUT;
-        } else {
-            userInput[`${input.name}`] = Number.parseInt(input.value);
-        }
-    });
-}
-
-function calculateAge() {
-    if (userInput.day === "" || userInput.day === undefined || userInput.month === "" || userInput.month === undefined || userInput.year === "" || userInput.year === undefined) {
-        return;
-    }
-
-    const currentTime = new Date();
-    const birthDate = new Date(userInput.year, userInput.month - 1, userInput.day);
-    const elapsedTime = currentTime.getTime() - birthDate.getTime();
-    const age = new Date(elapsedTime);
-
-    const years = age.getFullYear() - 1970;
-    const months = age.getMonth();
-    const days = age.getDate() - 1;
-
-    displayDayEl.textContent = days;
-    displayMonthEl.textContent = months;
-    displayYearEl.textContent = years;
-}
+const ageCalculator = new Calculator();
 
 btnCalculate.addEventListener("click", () => {
-    resetError();
-    getInputs();
-    validateInputs();
-    calculateAge();
+    ageCalculator.resetError();
+    ageCalculator.getInputs();
+    ageCalculator.validateInputs();
+    ageCalculator.calculateAge();
 });
