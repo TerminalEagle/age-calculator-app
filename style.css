@@ -1,0 +1,261 @@
+:root {
+    --clr-primary-purple: hsl(259, 100%, 65%);
+    --clr-primary-red: hsl(0, 100%, 67%);
+
+    --clr-neutral-900: hsl(0, 0%, 8%);
+    --clr-neutral-700: hsl(0, 1%, 44%);
+    --clr-neutral-500: hsl(0, 0%, 86%);
+    --clr-neutral-300: hsl(0, 0%, 94%);
+    --clr-neutral-100: hsl(0, 0%, 100%);
+
+    --fnt-weight-normal: 400;
+    --fnt-weight-bold: 700;
+    --fnt-weight-strong: 800;
+
+    --fnt-family-primary: "Poppins", sans-serif;
+}
+
+/*
+  1. Use a more-intuitive box-sizing model.
+*/
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+/*
+    2. Remove default margin
+  */
+* {
+    margin: 0;
+}
+/*
+    3. Allow percentage-based heights in the application
+  */
+html,
+body {
+    height: 100%;
+}
+/*
+    Typographic tweaks!
+    4. Add accessible line-height
+    5. Improve text rendering
+  */
+body {
+    line-height: 1;
+    -webkit-font-smoothing: antialiased;
+}
+/*
+    6. Improve media defaults
+  */
+img,
+picture,
+video,
+canvas,
+svg,
+g {
+    display: block;
+    max-width: 100%;
+}
+/*
+    7. Remove built-in form typography styles
+  */
+input,
+button,
+textarea,
+select {
+    font: inherit;
+}
+/*
+    8. Avoid text overflows
+  */
+p,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    overflow-wrap: break-word;
+}
+
+button,
+input {
+    cursor: pointer;
+}
+
+/*//////////////////////////////////////////
+////////       GENERAL STYLES    ///////////
+//////////////////////////////////////////*/
+
+body {
+    font-family: var(--fnt-family-primary);
+    background-color: var(--clr-neutral-300);
+    color: var(--clr-neutral-900);
+
+    /* padding: 1rem; */
+    display: grid;
+    place-content: center;
+}
+
+main {
+    background-color: var(--clr-neutral-100);
+
+    display: inline-block;
+    padding: 2.5rem 1.5rem;
+    border-radius: 16px;
+    border-end-end-radius: 100px;
+}
+
+/*/ /////////////////////////////////////////
+////////    CALCULATOR INPUT    ///////////
+//////////////////////////////////////////*/
+
+.calculator-input {
+    display: flex;
+    gap: 1rem;
+
+    /* max-width: 100%; */
+    margin-bottom: 2rem;
+}
+
+.calculator-input .input-field {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.calculator-input label {
+    color: var(--clr-neutral-700);
+
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+}
+
+.calculator-input input {
+    font-size: 1.125rem;
+    letter-spacing: 1px;
+    width: 5rem;
+
+    border: none;
+    border: 1px solid var(--clr-neutral-500);
+    border-radius: 8px;
+    padding: 0.5rem 0.75rem;
+}
+
+.calculator-input input:focus {
+    outline: var(--clr-primary-purple) solid 1px;
+}
+
+.error-message {
+    color: var(--clr-primary-red);
+    font-size: 0.875rem;
+    font-weight: var(--fnt-weight-normal);
+    font-style: italic;
+}
+
+.divider {
+    display: flex;
+    align-items: center;
+    margin-bottom: 2rem;
+}
+
+.divider hr {
+    border: none;
+    border: 1px solid var(--clr-neutral-300);
+    position: relative;
+
+    width: 100%;
+    height: 0;
+}
+
+.divider button {
+    background-color: var(--clr-primary-purple);
+    border: none;
+    border-radius: 50%;
+
+    padding: 0;
+    padding: 1rem;
+}
+
+.divider button:hover {
+    background-color: var(--clr-neutral-900);
+}
+
+.divider button:focus {
+    outline: var(--clr-primary-red) solid 3px;
+    outline-offset: -3px;
+}
+
+.divider svg {
+    height: auto;
+}
+
+.divider g {
+    stroke-width: 4;
+}
+
+/*/ /////////////////////////////////////////
+////////    DISPLAY RESULT    ///////////
+//////////////////////////////////////////*/
+
+.display-result p {
+    font-size: 3rem;
+    font-weight: var(--fnt-weight-strong);
+    font-style: italic;
+}
+
+.display-result span {
+    color: var(--clr-primary-purple);
+}
+
+@media (min-width: 60em) {
+    main {
+        padding: 3rem;
+    }
+
+    .calculator-input,
+    .divider {
+        margin-bottom: 0;
+    }
+
+    .calculator-input {
+        padding-right: 12rem;
+        gap: 2rem;
+    }
+
+    .calculator-input .input-field {
+        gap: 1rem;
+    }
+
+    .calculator-input label {
+        font-size: 1rem;
+    }
+
+    .calculator-input input {
+        font-size: 2rem;
+        width: 10rem;
+        padding: 0.5rem 1.25rem;
+    }
+
+    .divider button {
+        padding: 1.5rem;
+    }
+
+    .divider .right-hr {
+        width: 0;
+    }
+
+    .divider g {
+        stroke-width: 2;
+    }
+
+    .display-result p {
+        font-size: 6rem;
+    }
+
+    .display-result span {
+        padding-right: 6px;
+    }
+}
