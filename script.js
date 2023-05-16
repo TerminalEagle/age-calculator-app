@@ -78,8 +78,8 @@ class Calculator {
             this.isValid = false;
         } else if (this.dateObject.month === 2) {
             if (
-                (checkForLeapYear(this.dateObject.year) && (this.dateObject.day > 29 || this.dateObject.day < 1)) ||
-                (!checkForLeapYear(this.dateObject.year) && (this.dateObject.day > 28 || this.dateObject.day < 1))
+                (this.checkForLeapYear(this.dateObject.year) && (this.dateObject.day > 29 || this.dateObject.day < 1)) ||
+                (!this.checkForLeapYear(this.dateObject.year) && (this.dateObject.day > 28 || this.dateObject.day < 1))
             ) {
                 errorDayEl.textContent = ERROR__INVALID_DAY;
                 this.isValid = false;
