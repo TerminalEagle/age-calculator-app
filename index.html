@@ -20,37 +20,37 @@
 <body>
   <main>
     <form class="calculator-input">
-      <div class="input-field">
+      <div class="input-field" role="element-group" aria-labelledby="day">
         <label for="day">Day</label>
         <input type="text" name="day" id="day" placeholder="DD" required>
         <p class="error-message error-day" data-error="date"></p>
       </div>
-      <div class="input-field">
+      <div class="input-field" role="element-group" aria-labelledby="month">
         <label for="month">Month</label>
         <input type="text" name="month" id="month" placeholder="MM" required>
         <p class="error-message error-month" data-error="month"></p>
       </div>
-      <div class="input-field">
+      <div class="input-field" role="element-group" aria-labelledby="year">
         <label for="year">Year</label>
         <input type="num" name="year" id="year" placeholder="YYYY" required>
         <p class="error-message error-year" data-error="year"></p>
       </div>
     </form>
-    <div class="divider">
-      <hr class="left-hr">
+    <div class="divider" role="decorative">
+      <hr class="left-hr" role="visual-division">
       <button id="btn-calculate">
         <svg xmlns="http://www.w3.org/2000/svg" width="46" height="44" viewBox="0 0 46 44">
           <g fill="none" stroke="#FFF" stroke-width="2">
             <path d="M1 22.019C8.333 21.686 23 25.616 23 44M23 44V0M45 22.019C37.667 21.686 23 25.616 23 44" />
           </g>
         </svg> </button>
-      <hr class="right-hr">
+      <hr class="right-hr" role="visual-division">
     </div>
-    <div class="display-result">
+    <section class="display-result">
       <p><span data-display="year">--</span>years</p>
       <p><span data-display="month">--</span>months</p>
       <p><span data-display="day">--</span>days</p>
-    </div>
+    </section>
   </main>
 </body>
 
