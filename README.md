@@ -72,7 +72,7 @@ The Age Calculator app is implemented using HTML, CSS, and JavaScript. The main 
 
 ### What I learned
 
-Although I had taken a course on HTML and CSS, I didn't have a lot of practical experience, so the exercises really helped me put the concepts I had learned to use in a more real-world setting. In particular, using flex-boxes and CSS properties like "max-width," "min-width," and "background-image."
+Code accessible by using the `aria`, `role` labels in the code for containers which inherently do not have a semantic meaning.
 
 ## Author
 
